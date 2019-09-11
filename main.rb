@@ -5,13 +5,10 @@ require './vending'
 class Main
 end
 
+@vending = Vending.new
 
 # 飲み物の登録
-@drinks = []
-@drinks.push(Drink.new(1,"お茶",120).array_drink)
-@drinks.push(Drink.new(2,"オレンジジュース",150).array_drink)
-@drinks.push(Drink.new(3,"アップルジュース",200).array_drink)
-
+@drinks = @vending.addDrinks([{num: 1, name: "お茶", price: 120}, {num: 2, name: "オレンジジュース", price: 150}, {num: 3, name: "アップルジュース", price: 200}])
 
 # ドリンク一覧の出力
 puts "ドリンクの一覧を表示します。"
@@ -22,7 +19,6 @@ end
 
 puts "----------"
 # 入金の依頼
-@vending = Vending.new
 inputDeposit = @vending.deposits
 
 
