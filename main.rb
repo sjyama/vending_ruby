@@ -11,16 +11,10 @@ end
 @drinks = @vending.addDrinks([{num: 1, name: "お茶", price: 120}, {num: 2, name: "オレンジジュース", price: 150}, {num: 3, name: "アップルジュース", price: 200}])
 
 # ドリンク一覧の出力
-puts "ドリンクの一覧を表示します。"
-@drinks.each do |drink|
-    puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
-end
+@vending.displayDrinks
 
-
-puts "----------"
 # 入金の依頼
 inputDeposit = @vending.deposits
-
 
 puts "----------"
 # 購入商品の選択依頼

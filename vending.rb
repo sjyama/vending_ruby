@@ -75,4 +75,12 @@ class Vending
         @drinks
     end
 
+    def displayDrinks
+        puts "ドリンクの一覧を表示します。"
+        @drinks.each do |drink|
+            puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
+        end
+        puts "----------"
+    end
+
 end
