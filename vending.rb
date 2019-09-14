@@ -19,26 +19,29 @@ class Vending
     end
 
     def orders(drinks)
-        puts "どのドリンクを購入しますか？番号で選択してください。"
-        print ">>"
-        @order = gets.chomp
-        if chk_number?(@order)
+        missOrder = true
+        while missOrder do
+            puts "どのドリンクを購入しますか？番号で選択してください。"
+            print ">>"
+            @order = gets.chomp
+            next unless chk_number?(@order)
+
             @order = @order.to_i
-            if chk_stock?(@order,drinks)
-                true
-            else
-                puts "選択されたドリンク番号は存在しません。"
-                false
-            end
-        else
-            puts "ドリンク選択は番号でお願いします。"
-            false
+            next unless chk_stock?(@order,drinks)
+
+            missOrder = false
         end
     end
 
     def chk_number?(num)
         # 先頭(\A)から末尾(\z)までが0~9であるか判定
-        @isNumber != (num =~ /\A[0-9]+\z/)
+        # @isNumber != (num =~ /\A[0-9]+\z/)
+        if (num =~ /\A[0-9]+\z/)
+            true
+        else
+            puts "数値以外の入力となっているようです。"
+            false
+        end
     end
 
     def chk_stock?(num,drinks)
@@ -50,6 +53,7 @@ class Vending
                 break
             end
         end
+        puts "選択したドリンクは存在しません。" unless returnFlg
         returnFlg
     end
 
