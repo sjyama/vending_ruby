@@ -1,28 +1,28 @@
 require './drink'
+require './message'
 
 class Vending
+    include VendingMessage
     attr_reader :order
-    
+
+    # 入金
     def deposits
-        puts "入金してください。"
-        print ">>"
+        putsSingleMessage("RequestDeposits")
         input = gets.chomp
         depo = Deposit.new(input)
         if chk_number?(depo.input_num)
-            puts "#{depo.input_num}円が投入されました！"
+            putsDoubleMessage("SuccessOfDeposit",depo.input_num)
         else
-            puts "入金は数値でお願いします。"
-            print "改めて、"
             deposits
         end
         depo.input_num
     end
 
+    # 商品選択
     def orders(drinks)
         missOrder = true
         while missOrder do
-            puts "どのドリンクを購入しますか？番号で選択してください。"
-            print ">>"
+            putsSingleMessage("RequestOrders")
             @order = gets.chomp
             next unless chk_number?(@order)
 
@@ -33,43 +33,47 @@ class Vending
         end
     end
 
+    # 数値チェック
     def chk_number?(num)
         # 先頭(\A)から末尾(\z)までが0~9であるか判定
         # @isNumber != (num =~ /\A[0-9]+\z/)
         if (num =~ /\A[0-9]+\z/)
             true
         else
-            puts "数値以外の入力となっているようです。"
+            putsSingleMessage("CautionOfNumber")
             false
         end
     end
 
+    # 在庫チェック
     def chk_stock?(num,drinks)
         returnFlg = false
         drinks.each do |d|
             if d[0]==num
-                puts "#{drinks[num-1][0]}番のドリンク「#{drinks[num-1][1]}(#{drinks[num-1][2]}円)」を選択しました！"
+                putsQuadrupleMessage("DetailOfOrder",d[0], d[1], d[2])
                 returnFlg = true
                 break
             end
         end
-        puts "選択したドリンクは存在しません。" unless returnFlg
+        putsSingleMessage("CautionOfStock") unless returnFlg
         returnFlg
     end
 
+    # 計算
     def calculate(inputDepo,drinkPrice)
         inputDepo = inputDepo.to_i
         drinkPrice = drinkPrice.to_i
         absNumber = (inputDepo - drinkPrice).abs
         if inputDepo > drinkPrice
-            puts "購入完了です！"
-            puts "おつりは#{absNumber}円です。"
+            putsSingleMessage("SuccessOfPurchase")
+            putsDoubleMessage("Change",absNumber)
         else
-            puts "購入できません。"
-            puts "#{absNumber}円の不足です。"
+            putsSingleMessage("FailureOfPurchase")
+            putsDoubleMessage("NotEnough",absNumber)
         end
     end
 
+    # 飲み物登録
     def addDrinks(drinkList)
         @drinks = []
         drinkList.each do |list|
@@ -79,8 +83,9 @@ class Vending
         @drinks
     end
 
+    # 飲み物一覧表示
     def displayDrinks
-        puts "ドリンクの一覧を表示します。"
+        putsSingleMessage("DisplayOfDrinks")
         @drinks.each do |drink|
             puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
         end
