@@ -66,7 +66,7 @@ class Vending
         end
     end
 
-    def addDrinks(drinkList)
+    def add_drinks(drinkList)
         @drinks = []
         drinkList.each do |list|
             drink = Drink.new(list[:num],list[:name],list[:price])
@@ -75,7 +75,7 @@ class Vending
         @drinks
     end
 
-    def displayDrinks
+    def display_drinks
         puts "ドリンクの一覧を表示します。"
         @drinks.each do |drink|
             puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
