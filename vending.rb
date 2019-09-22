@@ -68,8 +68,17 @@ class Vending
 
     def addDrinks(drinkList)
         @drinks = []
-        drinkList.each do |list|
-            drink = Drink.new(list[:num],list[:name],list[:price])
+        if drinkList.is_a?(Array)
+            drinkList.each do |list|
+                drink = Drink.new(list[:num],list[:name],list[:price])
+                @drinks.push(drink.array_drink)
+            end
+        else
+            list = []
+            drinkList.each do |key, value|
+                list.push(value)
+            end
+            drink = Drink.new(list[0],list[1],list[2])
             @drinks.push(drink.array_drink)
         end
         @drinks
