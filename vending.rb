@@ -1,3 +1,5 @@
+require './drink'
+
 class Vending
     attr_reader :order
     
@@ -62,6 +64,23 @@ class Vending
             puts "購入できません。"
             puts "#{absNumber}円の不足です。"
         end
-
     end
+
+    def add_drinks(drinkList)
+        @drinks = []
+        drinkList.each do |list|
+            drink = Drink.new(list[:num],list[:name],list[:price])
+            @drinks.push(drink.array_drink)
+        end
+        @drinks
+    end
+
+    def display_drinks
+        puts "ドリンクの一覧を表示します。"
+        @drinks.each do |drink|
+            puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
+        end
+        puts "----------"
+    end
+
 end
