@@ -66,7 +66,7 @@ class Vending
         end
     end
 
-    def addDrinks(drinkList)
+    def add_drinks(drinkList)
         @drinks = []
         if drinkList.is_a?(Array)
             drinkList.each do |list|
@@ -82,6 +82,14 @@ class Vending
             @drinks.push(drink.array_drink)
         end
         @drinks
+    end
+
+    def display_drinks
+        puts "ドリンクの一覧を表示します。"
+        @drinks.each do |drink|
+            puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
+        end
+        puts "----------"
     end
 
 end
