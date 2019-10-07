@@ -19,15 +19,7 @@ inputDeposit = @vending.deposits
 
 puts "----------"
 # 購入商品の選択依頼
-missOrder = false
-while !missOrder do
-    if @vending.orders(@drinks)
-        missOrder = true
-    else
-        missOrder = false
-    end
-end
-
+@vending.orders(@drinks)
 
 puts "----------"
 @vending.calculate(inputDeposit,@drinks[@vending.order-1][2])
