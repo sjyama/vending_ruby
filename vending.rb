@@ -75,19 +75,26 @@ class Vending
         end
     end
 
-    # 飲み物登録
-    def addDrinks(drinkList)
+    def add_drinks(drinkList)
         @drinks = []
-        drinkList.each do |list|
-            drink = Drink.new(list[:num],list[:name],list[:price])
+        if drinkList.is_a?(Array)
+            drinkList.each do |list|
+                drink = Drink.new(list[:num],list[:name],list[:price])
+                @drinks.push(drink.array_drink)
+            end
+        else
+            list = []
+            drinkList.each do |key, value|
+                list.push(value)
+            end
+            drink = Drink.new(list[0],list[1],list[2])
             @drinks.push(drink.array_drink)
         end
         @drinks
     end
 
-    # 飲み物一覧表示
-    def displayDrinks
-        puts_message_display_drinks()
+    def display_drinks
+        puts "ドリンクの一覧を表示します。"
         @drinks.each do |drink|
             puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
         end
