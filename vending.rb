@@ -7,11 +7,11 @@ class Vending
 
     # 入金
     def deposits
-        putsSingleMessage("RequestDeposits")
+        puts_message_request_deposit()
         input = gets.chomp
-        depo = Deposit.new(input)
+        depo  = Deposit.new(input)
         if chk_number?(depo.input_num)
-            putsDoubleMessage("SuccessOfDeposit",depo.input_num)
+            puts_message_success_deposit(depo.input_num)
         else
             deposits
         end
@@ -20,9 +20,10 @@ class Vending
 
     # 商品選択
     def orders(drinks)
+        puts_message_line()
         missOrder = true
         while missOrder do
-            putsSingleMessage("RequestOrders")
+            puts_message_request_order()
             @order = gets.chomp
             next unless chk_number?(@order)
 
@@ -40,7 +41,7 @@ class Vending
         if (num =~ /\A[0-9]+\z/)
             true
         else
-            putsSingleMessage("CautionOfNumber")
+            puts_message_not_number()
             false
         end
     end
@@ -50,26 +51,27 @@ class Vending
         returnFlg = false
         drinks.each do |d|
             if d[0]==num
-                putsQuadrupleMessage("DetailOfOrder",d[0], d[1], d[2])
+                puts_message_detail_order(d[0], d[1], d[2])
                 returnFlg = true
                 break
             end
         end
-        putsSingleMessage("CautionOfStock") unless returnFlg
+        puts_message_not_exist_drinks() unless returnFlg
         returnFlg
     end
 
     # 計算
     def calculate(inputDepo,drinkPrice)
-        inputDepo = inputDepo.to_i
+        puts_message_line()
+        inputDepo  = inputDepo.to_i
         drinkPrice = drinkPrice.to_i
-        absNumber = (inputDepo - drinkPrice).abs
+        absNumber  = (inputDepo - drinkPrice).abs
         if inputDepo > drinkPrice
-            putsSingleMessage("SuccessOfPurchase")
-            putsDoubleMessage("Change",absNumber)
+            puts_message_success_purchase()
+            puts_message_change(absNumber)
         else
-            putsSingleMessage("FailureOfPurchase")
-            putsDoubleMessage("NotEnough",absNumber)
+            puts_message_failure_purchase()
+            puts_message_not_enough(absNumber)
         end
     end
 
@@ -85,11 +87,11 @@ class Vending
 
     # 飲み物一覧表示
     def displayDrinks
-        putsSingleMessage("DisplayOfDrinks")
+        puts_message_display_drinks()
         @drinks.each do |drink|
             puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
         end
-        puts "----------"
+        puts_message_line()
     end
 
 end

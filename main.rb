@@ -1,6 +1,7 @@
 require './drink'
 require './deposit'
 require './vending'
+require './message'
 
 class Main
 end
@@ -16,9 +17,7 @@ end
 # 入金の依頼
 inputDeposit = @vending.deposits
 
-puts "----------"
 # 購入商品の選択依頼
 @vending.orders(@drinks)
 
-puts "----------"
 @vending.calculate(inputDeposit,@drinks[@vending.order-1][2])
