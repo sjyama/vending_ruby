@@ -40,8 +40,8 @@ module VendingMessage
         puts "#{num}円の不足です。"
     end
 
-    def puts_message_detail_order(num1,num2,num3)
-        puts "#{num1}番のドリンク「#{num2}(#{num3}円)」を選択しました！"
+    def puts_message_detail_order(*drink)
+        puts "#{drink[0][0]}番のドリンク「#{drink[0][1]}(#{drink[0][2]}円)」を選択しました！"
     end
 
     def puts_message_line()

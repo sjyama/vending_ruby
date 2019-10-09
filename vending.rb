@@ -1,5 +1,5 @@
 require './drink'
-require './message'
+    require './message'
 
 class Vending
     include VendingMessage
@@ -49,9 +49,9 @@ class Vending
     # 在庫チェック
     def chk_stock?(num,drinks)
         returnFlg = false
-        drinks.each do |d|
-            if d[0]==num
-                puts_message_detail_order(d[0], d[1], d[2])
+        drinks.each do |drink|
+            if drink[0]==num
+                puts_message_detail_order(drink)
                 returnFlg = true
                 break
             end
