@@ -1,28 +1,29 @@
 require './drink'
+    require './message'
 
 class Vending
+    include VendingMessage
     attr_reader :order
-    
+
+    # 入金
     def deposits
-        puts "入金してください。"
-        print ">>"
+        puts_message_request_deposit()
         input = gets.chomp
-        depo = Deposit.new(input)
+        depo  = Deposit.new(input)
         if chk_number?(depo.input_num)
-            puts "#{depo.input_num}円が投入されました！"
+            puts_message_success_deposit(depo.input_num)
         else
-            puts "入金は数値でお願いします。"
-            print "改めて、"
             deposits
         end
         depo.input_num
     end
 
+    # 商品選択
     def orders(drinks)
+        puts_message_line()
         missOrder = true
         while missOrder do
-            puts "どのドリンクを購入しますか？番号で選択してください。"
-            print ">>"
+            puts_message_request_order()
             @order = gets.chomp
             next unless chk_number?(@order)
 
@@ -33,40 +34,44 @@ class Vending
         end
     end
 
+    # 数値チェック
     def chk_number?(num)
         # 先頭(\A)から末尾(\z)までが0~9であるか判定
         # @isNumber != (num =~ /\A[0-9]+\z/)
         if (num =~ /\A[0-9]+\z/)
             true
         else
-            puts "数値以外の入力となっているようです。"
+            puts_message_not_number()
             false
         end
     end
 
+    # 在庫チェック
     def chk_stock?(num,drinks)
         returnFlg = false
-        drinks.each do |d|
-            if d[0]==num
-                puts "#{drinks[num-1][0]}番のドリンク「#{drinks[num-1][1]}(#{drinks[num-1][2]}円)」を選択しました！"
+        drinks.each do |drink|
+            if drink[0]==num
+                puts_message_detail_order(drink)
                 returnFlg = true
                 break
             end
         end
-        puts "選択したドリンクは存在しません。" unless returnFlg
+        puts_message_not_exist_drinks() unless returnFlg
         returnFlg
     end
 
+    # 計算
     def calculate(inputDepo,drinkPrice)
-        inputDepo = inputDepo.to_i
+        puts_message_line()
+        inputDepo  = inputDepo.to_i
         drinkPrice = drinkPrice.to_i
-        absNumber = (inputDepo - drinkPrice).abs
+        absNumber  = (inputDepo - drinkPrice).abs
         if inputDepo > drinkPrice
-            puts "購入完了です！"
-            puts "おつりは#{absNumber}円です。"
+            puts_message_success_purchase()
+            puts_message_change(absNumber)
         else
-            puts "購入できません。"
-            puts "#{absNumber}円の不足です。"
+            puts_message_failure_purchase()
+            puts_message_not_enough(absNumber)
         end
     end
 
@@ -93,7 +98,7 @@ class Vending
         @drinks.each do |drink|
             puts " #{drink[0]}：#{drink[1]}（#{drink[2]}円）"
         end
-        puts "----------"
+        puts_message_line()
     end
 
 end
