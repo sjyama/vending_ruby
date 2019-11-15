@@ -9,12 +9,12 @@ class Vending
     def deposits
         puts_message_request_deposit()
         input = gets.chomp
-        depo  = Deposit.new(input)
-        if chk_number?(depo.input_num)
-            puts_message_success_deposit(depo.input_num)
+        if chk_number?(input)
+            puts_message_success_deposit(input)
         else
             deposits
         end
+        depo  = Deposit.new(input)
         depo.input_num
     end
 
