@@ -104,4 +104,32 @@ class Vending
         puts_message_line()
     end
 
+    private
+
+    # 数値チェック
+    def chk_number?(num)
+        # 先頭(\A)から末尾(\z)までが0~9であるか判定
+        # @isNumber != (num =~ /\A[0-9]+\z/)
+        if (num =~ /\A[0-9]+\z/)
+            true
+        else
+            puts_message_not_number()
+            false
+        end
+    end
+
+    # 在庫チェック
+    def chk_stock?(num,drinks)
+        returnFlg = false
+        drinks.each do |drink|
+            if drink[0]==num
+                puts_message_detail_order(drink)
+                returnFlg = true
+                break
+            end
+        end
+        puts_message_not_exist_drinks() unless returnFlg
+        returnFlg
+    end
+
 end

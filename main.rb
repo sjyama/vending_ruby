@@ -1,4 +1,3 @@
-require './drink'
 require './deposit'
 require './vending'
 require './message'
