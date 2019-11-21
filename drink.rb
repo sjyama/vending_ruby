@@ -1,7 +1,11 @@
 class Drink
-	attr_reader :array_drink
+	attr_reader :num
+	attr_reader :name
+	attr_reader :price
 
 	def initialize(num, name, price)
-		@array_drink = [num, name, price]
+		@num   = num
+		@name  = name
+		@price = price
 	end
 end
