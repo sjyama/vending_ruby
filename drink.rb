@@ -3,9 +3,9 @@ class Drink
 	attr_reader :name
 	attr_reader :price
 
-	def initialize(num, name, price)
-		@num   = num
-		@name  = name
-		@price = price
+	def initialize(hash_drink)
+		@num   = hash_drink[:num]
+		@name  = hash_drink[:name]
+		@price = hash_drink[:price]
 	end
 end
