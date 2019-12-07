@@ -81,15 +81,11 @@ class Vending
         @drinks = []
         if drink_list.is_a?(Array)
             drink_list.each do |list|
-                drink = Drink.new(list[:num],list[:name],list[:price])
+                drink = Drink.new(list)
                 @drinks.push(drink)
             end
         else
-            list = []
-            drink_list.each do |key, value|
-                list.push(value)
-            end
-            drink = Drink.new(list[0],list[1],list[2])
+            drink = Drink.new(drink_list)
             @drinks.push(drink)
         end
         @drinks
