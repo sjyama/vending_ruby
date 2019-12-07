@@ -1,8 +1,7 @@
 class Deposit
-    attr_reader :input_num
+	attr_reader :deposited_money
 
-    def initialize(input)
-        @input_num = input
-    end
-
+	def initialize(input)
+		@deposited_money = input
+	end
 end
