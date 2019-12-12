@@ -24,4 +24,4 @@ drinks = [{name: "お茶", price: 120}, {name: "オレンジジュース", price
 @vending.orders
 
 # 会計
-@vending.calculate(@vending.selected_drink.price)
+@vending.calculate

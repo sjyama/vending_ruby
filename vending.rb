@@ -45,24 +45,20 @@ class Vending
     # 購入商品の選択依頼
     def orders
         puts_message_line()
-        miss_order = true
-        while miss_order do
+        while true do
             puts_message_request_order()
             selected_drink_num = gets.chomp
             next unless chk_number?(selected_drink_num)
 
-            selected_drink_num = selected_drink_num.to_i
-            next unless chk_stock?(selected_drink_num, @drinks)
-
-            miss_order = false
+            break drink_present?(selected_drink_num)
         end
     end
 
     # 会計
-    def calculate(drink_price)
+    def calculate
         puts_message_line()
-        drink_price = drink_price.to_i
-        change  = (@deposited_money - drink_price).abs
+        drink_price = @selected_drink.price.to_i
+        change = (@deposited_money - drink_price).abs
         if @deposited_money >= drink_price
           puts_message_success_purchase()
           puts_message_change(change)
@@ -86,19 +82,16 @@ class Vending
     end
 
     # 在庫チェック
-    def chk_stock?(selected_drink_num, drink_list)
-        return_flg = false
-        drink_list.each do |drink|
-            puts drink.id
-            if drink.id == selected_drink_num
-                puts_message_detail_order(drink)
-                @selected_drink = drink
-                return_flg = true
-                break
-            end
-        end
-        puts_message_not_exist_drinks() unless return_flg
-        return_flg
+    def drink_present?(selected_drink_num)
+      selected_drink_num = selected_drink_num.to_i
+
+      @drinks.each do |drink|
+          @selected_drink = drink if drink.id == selected_drink_num
+      end
+      puts_message_detail_order(@selected_drink) if @selected_drink
+      puts_message_not_exist_drinks() unless @selected_drink
+
+      @selected_drink
     end
 
 end
