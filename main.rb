@@ -7,9 +7,10 @@ end
 
 @vending = Vending.new
 
+drinks = [{name: "お茶", price: 120}, {name: "オレンジジュース", price: 150}, {name: "アップルジュース", price: 200}]
 # 飲み物の初期登録
 ## Array形式のデータ
-@vending.add_drinks([{num: 1, name: "お茶", price: 120}, {num: 2, name: "オレンジジュース", price: 150}, {num: 3, name: "アップルジュース", price: 200}])
+@vending.add(drinks)
 ## Hash形式のデータ
 # @drinks = @vending.add_drinks({num: 1, name: "お茶", price: 120})
 
@@ -23,8 +24,4 @@ end
 @vending.orders
 
 # 会計
-<<<<<<< HEAD
 @vending.calculate(@vending.selected_drink.price)
-=======
-@vending.calculate(input_deposit, @vending.selected_drink.price)
->>>>>>> master

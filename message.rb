@@ -41,7 +41,7 @@ module VendingMessage
     end
 
     def puts_message_detail_order(drink)
-        puts "#{drink.num}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
+        puts "#{drink.id}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
     end
 
     def puts_message_line()

@@ -1,10 +1,11 @@
 class Drink
-	attr_reader :num
-	attr_reader :name
-	attr_reader :price
+	attr_reader :id, :name, :price
+
+	@@id = 0
 
 	def initialize(hash_drink)
-		@num   = hash_drink[:num]
+		@@id += 1
+		@id = @@id
 		@name  = hash_drink[:name]
 		@price = hash_drink[:price]
 	end

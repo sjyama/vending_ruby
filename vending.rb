@@ -6,15 +6,15 @@ class Vending
     attr_reader :selected_drink
 
     # 飲み物の初期登録
-    def add_drinks(drink_list)
+    def add(drinks)
         @drinks = []
-        if drink_list.is_a?(Array)
-            drink_list.each do |list|
+        if drinks.is_a?(Array)
+            drinks.each do |list|
                 drink = Drink.new(list)
                 @drinks.push(drink)
             end
         else
-            drink = Drink.new(drink_list)
+            drink = Drink.new(drinks)
             @drinks.push(drink)
         end
         @drinks
@@ -24,7 +24,7 @@ class Vending
     def display_drinks
         puts_message_display_drinks()
         @drinks.each do |drink|
-            puts " #{drink.num}：#{drink.name}（#{drink.price}円）"
+            puts " #{drink.id}：#{drink.name}（#{drink.price}円）"
         end
         puts_message_line()
     end
@@ -89,7 +89,8 @@ class Vending
     def chk_stock?(selected_drink_num, drink_list)
         return_flg = false
         drink_list.each do |drink|
-            if drink.num == selected_drink_num
+            puts drink.id
+            if drink.id == selected_drink_num
                 puts_message_detail_order(drink)
                 @selected_drink = drink
                 return_flg = true
