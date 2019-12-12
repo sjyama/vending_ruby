@@ -8,7 +8,7 @@ module VendingMessage
         print "どのドリンクを購入しますか？番号で選択してください。\r\n>>"
     end
 
-    def puts_message_not_number()
+    def puts_message_not_number
         puts "数値以外の入力となっているようです。"
     end
 
