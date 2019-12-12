@@ -8,4 +8,5 @@ class Drink
 		@name  = hash_drink[:name]
 		@price = hash_drink[:price]
 	end
+
 end

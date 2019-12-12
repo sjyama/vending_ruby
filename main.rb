@@ -1,4 +1,3 @@
-require './drink'
 require './deposit'
 require './vending'
 require './message'
@@ -24,4 +23,8 @@ end
 @vending.orders
 
 # 会計
+<<<<<<< HEAD
 @vending.calculate(@vending.selected_drink.price)
+=======
+@vending.calculate(input_deposit, @vending.selected_drink.price)
+>>>>>>> master
