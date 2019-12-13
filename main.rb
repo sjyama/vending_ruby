@@ -1,9 +1,4 @@
-require './deposit'
 require './vending'
-require './message'
-
-class Main
-end
 
 @vending = Vending.new
 
