@@ -32,12 +32,7 @@ class Vending
 
     puts_message_success_deposit(money)
 
-    if @deposited_money
-      @deposited_money += money.to_i
-    else
-      @deposited_money = money.to_i
-    end
-
+    build_deposited_money(money)
   end
 
   # 購入商品の選択依頼
@@ -96,4 +91,11 @@ class Vending
     @selected_drink
   end
 
+  def build_deposited_money(money)
+    if @deposited_money
+      @deposited_money += money.to_i
+    else
+      @deposited_money = money.to_i
+    end
+  end
 end
