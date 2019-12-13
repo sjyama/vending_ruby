@@ -1,50 +1,52 @@
-module VendingMessage
+module Message
+  def drink_info_message(drinks)
+    if drinks.empty?
+      puts "ドリンクがありません"
+    else
+      text = "ドリンクの一覧を表示します。\n"
+      text += "--------------------------\n"
+      drinks.each {|drink| text += " #{drink.id}：#{drink.name}（#{drink.price}円）\n" }
+      text += "--------------------------\n"
 
-    def puts_message_request_deposit
-        print "入金してください。\r\n>>"
+      puts text
     end
+  end
 
-    def puts_message_request_order
-        print "どのドリンクを購入しますか？番号で選択してください。\r\n>>"
-    end
+  def request_deposit_message
+      print "入金してください。\r\n>>"
+  end
 
-    def puts_message_not_number
-        puts "数値以外の入力となっているようです。"
-    end
+  def request_order_message
+      print "どのドリンクを購入しますか？番号で選択してください。\r\n>>"
+  end
 
-    def puts_message_not_exist_drinks
-        puts "選択したドリンクは存在しません。"
-    end
+  def not_number_message
+      puts "数値以外の入力となっているようです。"
+  end
 
-    def puts_message_failure_purchase(money)
-        puts <<~EOS
-        入力金額が不足しているため、購入できません。
-        #{money}円の不足です。
-        EOS
-    end
+  def not_exist_drinks_message
+      puts "選択したドリンクは存在しません。"
+  end
 
-    def puts_message_success_purchase(money)
-        puts <<~EOS
-        購入完了です！
-        おつりは#{money}円です。
-        EOS
-    end
+  def failure_purchase_message(money)
+      puts <<~EOS
+      入力金額が不足しているため、購入できません。
+      #{money}円の不足です。
+      EOS
+  end
 
-    def puts_message_display_drinks(drinks)
-        text = "ドリンクの一覧を表示します。\n"
-        text += "--------------------------\n"
-        drinks.each {|drink| text += " #{drink.id}：#{drink.name}（#{drink.price}円）\n" }
-        text += "--------------------------\n"
+  def success_purchase_message(money)
+      puts <<~EOS
+      購入完了です！
+      おつりは#{money}円です。
+      EOS
+  end
 
-        puts text
-    end
+  def success_deposit_message(num)
+      puts "#{num}円が投入されました！"
+  end
 
-    def puts_message_success_deposit(num)
-        puts "#{num}円が投入されました！"
-    end
-
-    def puts_message_detail_order(drink)
-        puts "#{drink.id}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
-    end
-
+  def detail_order_message(drink)
+      puts "#{drink.id}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
+  end
 end

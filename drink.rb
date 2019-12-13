@@ -3,11 +3,11 @@ class Drink
 
 	@@id = 0
 
-	def initialize(hash_drink)
+	def initialize(**params)
 		@@id += 1
 		@id = @@id
-		@name  = hash_drink[:name]
-		@price = hash_drink[:price]
+		@name  = params[:name]
+		@price = params[:price]
 	end
 
 end
