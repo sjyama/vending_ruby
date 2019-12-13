@@ -24,8 +24,13 @@ module VendingMessage
         puts "購入完了です！"
     end
 
-    def puts_message_display_drinks()
-        puts "ドリンクの一覧を表示します。"
+    def puts_message_display_drinks(drinks)
+        text = "ドリンクの一覧を表示します。\n"
+        text += "--------------------------\n"
+        drinks.each {|drink| text += " #{drink.id}：#{drink.name}（#{drink.price}円）\n" }
+        text += "--------------------------\n"
+
+        puts text
     end
 
     def puts_message_success_deposit(num)
@@ -45,7 +50,7 @@ module VendingMessage
     end
 
     def puts_message_line()
-        puts "----------"
+      puts "-" * 20
     end
 
 end
