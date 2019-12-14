@@ -81,15 +81,21 @@ class Vending
         @drinks = []
         if drink_list.is_a?(Array)
             drink_list.each do |list|
-                drink = Drink.new(list)
+                drink = build_drink(list)
                 @drinks.push(drink)
             end
         else
-            drink = Drink.new(drink_list)
+            drink = build_drink(drink_list)
             @drinks.push(drink)
         end
         @drinks
     end
+
+    # Drinkインスタンスの作成
+    def build_drink(params)
+        Drink.new(params)
+    end
+
 
     # 飲み物一覧の出力
     def display_drinks
