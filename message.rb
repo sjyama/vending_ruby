@@ -1,30 +1,30 @@
-module VendingMessage
+module Message
 
-    def puts_message_request_deposit()
+    def puts_message_request_deposit
         print "入金してください。\r\n>>"
     end
 
-    def puts_message_request_order()
+    def puts_message_request_order
         print "どのドリンクを購入しますか？番号で選択してください。\r\n>>"
     end
 
-    def puts_message_not_number()
+    def puts_message_not_number
         puts "数値以外の入力となっているようです。"
     end
 
-    def puts_message_not_exist_drinks()
+    def puts_message_not_exist_drinks
         puts "選択したドリンクは存在しません。"
     end
 
-    def puts_message_failure_purchase()
+    def puts_message_failure_purchase
         puts "入力金額が不足しているため、購入できません。"
     end
 
-    def puts_message_success_purchase()
+    def puts_message_success_purchase
         puts "購入完了です！"
     end
 
-    def puts_message_display_drinks()
+    def puts_message_display_drinks
         puts "ドリンクの一覧を表示します。"
     end
 
@@ -44,7 +44,7 @@ module VendingMessage
         puts "#{drink.num}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
     end
 
-    def puts_message_line()
+    def puts_message_line
         puts "----------"
     end
 

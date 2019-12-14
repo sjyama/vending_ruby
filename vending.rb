@@ -2,12 +2,12 @@ require './drink'
 require './message'
 
 class Vending
-    include VendingMessage
+    include Message
     attr_reader :selected_drink
 
     # 入金の依頼
     def deposits
-        puts_message_request_deposit()
+        puts_message_request_deposit
         input = gets.chomp
         if chk_number?(input)
             puts_message_success_deposit(input)
@@ -20,10 +20,10 @@ class Vending
 
     # 購入商品の選択依頼
     def orders(drink_list)
-        puts_message_line()
+        puts_message_line
         miss_order = true
         while miss_order do
-            puts_message_request_order()
+            puts_message_request_order
             selected_drink_num = gets.chomp
             next unless chk_number?(selected_drink_num)
 
@@ -41,7 +41,7 @@ class Vending
         if (num =~ /\A[0-9]+\z/)
             true
         else
-            puts_message_not_number()
+            puts_message_not_number
             false
         end
     end
@@ -57,21 +57,21 @@ class Vending
                 break
             end
         end
-        puts_message_not_exist_drinks() unless return_flg
+        puts_message_not_exist_drinks unless return_flg
         return_flg
     end
 
     # 会計
     def calculate(deposit, drink_price)
-        puts_message_line()
+        puts_message_line
         deposit     = deposit.to_i
         drink_price = drink_price.to_i
         abs_number  = (deposit - drink_price).abs
         if deposit > drink_price
-            puts_message_success_purchase()
+            puts_message_success_purchase
             puts_message_change(abs_number)
         else
-            puts_message_failure_purchase()
+            puts_message_failure_purchase
             puts_message_not_enough(abs_number)
         end
     end
@@ -99,11 +99,11 @@ class Vending
 
     # 飲み物一覧の出力
     def display_drinks
-        puts_message_display_drinks()
+        puts_message_display_drinks
         @drinks.each do |drink|
             puts " #{drink.num}：#{drink.name}（#{drink.price}円）"
         end
-        puts_message_line()
+        puts_message_line
     end
 
 end
