@@ -24,4 +24,4 @@ input_deposit = @vending.deposits
 @vending.orders(@drinks)
 
 # 会計
-@vending.calculate(input_deposit, @vending.selected_drink.price)
+@vending.calculate

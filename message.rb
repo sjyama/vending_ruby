@@ -38,6 +38,10 @@ module Message
         puts "#{num}円が投入されました！"
     end
 
+    def puts_message_total_deposit(num)
+        puts "入金額の合計は#{num}円になりました。"
+    end
+
     def puts_message_detail_order(drink)
         puts "#{drink.num}番のドリンク「#{drink.name}(#{drink.price}円)」を選択しました！"
     end

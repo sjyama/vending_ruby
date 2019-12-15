@@ -26,7 +26,7 @@ class Vending
         while miss_order do
             puts_message_request_order
             selected_drink_num = gets.chomp
-            next unless chk_number?(selected_drink_num)
+            next unless number?(selected_drink_num)
 
             selected_drink_num = selected_drink_num.to_i
             next unless chk_stock?(selected_drink_num, drink_list)
@@ -36,7 +36,7 @@ class Vending
     end
 
     # 数値チェック
-    def chk_number?(num)
+    def number?(num)
         # 先頭(\A)から末尾(\z)までが0~9であるか判定
         # @isNumber != (num =~ /\A[0-9]+\z/)
         if (num =~ /\A[0-9]+\z/)
@@ -110,6 +110,7 @@ class Vending
     def build_deposited_money(money)
         if @deposited_money
             @deposited_money += money.to_i
+            puts_message_total_deposit(@deposited_money)
         else
             @deposited_money = money.to_i
         end
