@@ -16,12 +16,18 @@ module Message
         puts "選択したドリンクは存在しません。"
     end
 
-    def puts_message_failure_purchase
-        puts "入力金額が不足しているため、購入できません。"
+    def puts_message_failure_purchase(money)
+        puts <<~EOS
+        入力金額が不足しているため、購入できません。
+        #{money}円の不足です。
+        EOS
     end
 
-    def puts_message_success_purchase
-        puts "購入完了です！"
+    def puts_message_success_purchase(money)
+        puts <<~EOS
+        購入完了です！
+        おつりは#{money}円です。
+        EOS
     end
 
     def puts_message_display_drinks
@@ -30,14 +36,6 @@ module Message
 
     def puts_message_success_deposit(num)
         puts "#{num}円が投入されました！"
-    end
-
-    def puts_message_change(num)
-        puts "おつりは#{num}円です。"
-    end
-
-    def puts_message_not_enough(num)
-        puts "#{num}円の不足です。"
     end
 
     def puts_message_detail_order(drink)

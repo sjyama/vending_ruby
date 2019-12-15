@@ -8,14 +8,15 @@ class Vending
     # 入金の依頼
     def deposits
         puts_message_request_deposit
-        input = gets.chomp
-        if chk_number?(input)
-            puts_message_success_deposit(input)
-        else
+        money = gets.chomp
+
+        unless number?(money)
+            puts_message_not_number
             deposits
         end
-        depo  = Deposit.new(input)
-        depo.deposited_money
+
+        puts_message_success_deposit(money)
+        build_deposited_money(money)
     end
 
     # 購入商品の選択依頼
@@ -62,17 +63,17 @@ class Vending
     end
 
     # 会計
-    def calculate(deposit, drink_price)
+    def calculate
         puts_message_line
-        deposit     = deposit.to_i
-        drink_price = drink_price.to_i
-        abs_number  = (deposit - drink_price).abs
-        if deposit > drink_price
-            puts_message_success_purchase
-            puts_message_change(abs_number)
+        drink_price = @selected_drink.price.to_i
+        change = (@deposited_money - drink_price).abs
+
+        if @deposited_money >= drink_price
+            puts_message_success_purchase(change)
         else
-            puts_message_failure_purchase
-            puts_message_not_enough(abs_number)
+            puts_message_failure_purchase(change)
+            deposits
+            calculate
         end
     end
 
@@ -106,4 +107,11 @@ class Vending
         puts_message_line
     end
 
+    def build_deposited_money(money)
+        if @deposited_money
+            @deposited_money += money.to_i
+        else
+            @deposited_money = money.to_i
+        end
+    end
 end
