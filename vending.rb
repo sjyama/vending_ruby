@@ -1,8 +1,8 @@
 require './drink'
-require './message'
+require './vending_message'
 
 class Vending
-  include Message
+  include VendingMessage
 
   def initialize
     @drinks = []
@@ -17,48 +17,52 @@ class Vending
     end
   end
 
-  # 飲み物一覧の出力
-  def display_drinks
-    drink_info_message(@drinks)
-  end
-
   # 入金の依頼
   def deposits
     request_deposit_message
 
-    money = gets.chomp
+    inputed_money = gets.chomp
 
-    unless number?(money)
-      puts_message_not_number
+    unless number?(inputed_money)
+      not_number_message
       deposits
     end
 
-    success_deposit_message(money)
+    build_deposited_money(inputed_money)
+    success_deposit_message(inputed_money, @deposited_money)
+  end
 
-    build_deposited_money(money)
+  # 飲み物一覧の出力
+  def display_drinks
+    drink_info_message(@drinks, @deposited_money)
   end
 
   # 購入商品の選択依頼
-  def orders
+  def request_order
     while true do
       request_order_message
       selected_drink_num = gets.chomp
       next unless number?(selected_drink_num)
-      break if drink_present?(selected_drink_num)
+
+      if drink_present?(selected_drink_num)
+        detail_order_message(@selected_drink)
+        break
+      end
     end
   end
 
   # 会計
-  def calculate
-    selected_drink_price = @selected_drink.price
-    change = (@deposited_money - selected_drink_price).abs
+  def processing_payment
+    change = (@deposited_money - @selected_drink.price).abs
 
-    if @deposited_money >= selected_drink_price
+    if available?
       success_purchase_message(change)
     else
       failure_purchase_message(change)
       deposits
-      calculate
+      display_drinks
+      request_order
+      processing_payment
     end
   end
 
@@ -81,13 +85,12 @@ class Vending
       @selected_drink = drink if drink.id == selected_drink_num
     end
 
-    if @selected_drink
-      detail_order_message(@selected_drink)
-    else
+    unless @selected_drink
       not_exist_drinks_message
+      return false
     end
 
-    @selected_drink
+    true
   end
 
   def build_deposited_money(money)
@@ -96,5 +99,9 @@ class Vending
     else
       @deposited_money = money.to_i
     end
+  end
+
+  def available?
+    @deposited_money >= @selected_drink.price
   end
 end

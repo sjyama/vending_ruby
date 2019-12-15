@@ -1,11 +1,14 @@
-module Message
-  def drink_info_message(drinks)
+module VendingMessage
+  def drink_info_message(drinks, deposited_money)
     if drinks.empty?
       puts "ドリンクがありません"
     else
       text = "ドリンクの一覧を表示します。\n"
       text += "--------------------------\n"
-      drinks.each {|drink| text += " #{drink.id}：#{drink.name}（#{drink.price}円）\n" }
+      drinks.each do |drink|
+        available = deposited_money >= drink.price ? "○" : "×"
+        text += " #{drink.id}：#{drink.name}（#{drink.price}円）購入 #{available}\n"
+      end
       text += "--------------------------\n"
 
       puts text
@@ -42,8 +45,8 @@ module Message
       EOS
   end
 
-  def success_deposit_message(num)
-      puts "#{num}円が投入されました！"
+  def success_deposit_message(inputed_money, deposited_money)
+      puts "#{inputed_money}円が投入されました！ 合計投入金額：#{deposited_money}円"
   end
 
   def detail_order_message(drink)

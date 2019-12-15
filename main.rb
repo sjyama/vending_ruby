@@ -16,7 +16,7 @@ params = [{name: "お茶", price: 120}, {name: "オレンジジュース", price
 @vending.display_drinks
 
 # 購入商品の選択依頼
-@vending.orders
+@vending.request_order
 
 # 会計
-@vending.calculate
+@vending.processing_payment
