@@ -5,13 +5,36 @@ class Vending
     include Message
     attr_reader :selected_drink
 
+    # 飲み物の初期登録
+    def add_drinks(drink_list)
+        @drinks = []
+        if drink_list.is_a?(Array)
+            drink_list.each do |list|
+                drink = build_drink(list)
+                @drinks.push(drink)
+            end
+        else
+            drink = build_drink(drink_list)
+            @drinks.push(drink)
+        end
+        @drinks
+    end
+
+    # 飲み物一覧の出力
+    def display_drinks
+        puts_message_display_drinks
+        @drinks.each do |drink|
+        end
+        puts_message_line
+    end
+
     # 入金の依頼
     def deposits
         puts_message_request_deposit
         money = gets.chomp
 
         unless number?(money)
-            puts_message_not_number
+            # puts_message_not_number
             deposits
         end
 
@@ -33,6 +56,28 @@ class Vending
 
             miss_order = false
         end
+    end
+
+    # 会計
+    def calculate
+        puts_message_line
+        drink_price = @selected_drink.price.to_i
+        change = (@deposited_money - drink_price).abs
+
+        if @deposited_money >= drink_price
+            puts_message_success_purchase(change)
+        else
+            puts_message_failure_purchase(change)
+            deposits
+            calculate
+        end
+    end
+
+    private
+
+    # Drinkインスタンスの作成
+    def build_drink(params)
+        Drink.new(params)
     end
 
     # 数値チェック
@@ -60,51 +105,6 @@ class Vending
         end
         puts_message_not_exist_drinks unless return_flg
         return_flg
-    end
-
-    # 会計
-    def calculate
-        puts_message_line
-        drink_price = @selected_drink.price.to_i
-        change = (@deposited_money - drink_price).abs
-
-        if @deposited_money >= drink_price
-            puts_message_success_purchase(change)
-        else
-            puts_message_failure_purchase(change)
-            deposits
-            calculate
-        end
-    end
-
-    # 飲み物の初期登録
-    def add_drinks(drink_list)
-        @drinks = []
-        if drink_list.is_a?(Array)
-            drink_list.each do |list|
-                drink = build_drink(list)
-                @drinks.push(drink)
-            end
-        else
-            drink = build_drink(drink_list)
-            @drinks.push(drink)
-        end
-        @drinks
-    end
-
-    # Drinkインスタンスの作成
-    def build_drink(params)
-        Drink.new(params)
-    end
-
-
-    # 飲み物一覧の出力
-    def display_drinks
-        puts_message_display_drinks
-        @drinks.each do |drink|
-            puts " #{drink.num}：#{drink.name}（#{drink.price}円）"
-        end
-        puts_message_line
     end
 
     def build_deposited_money(money)
