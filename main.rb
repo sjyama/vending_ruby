@@ -18,7 +18,7 @@ end
 @vending.display_drinks
 
 # 入金の依頼
-input_deposit = @vending.deposits
+@vending.deposits
 
 # 購入商品の選択依頼
 @vending.orders(@drinks)
