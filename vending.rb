@@ -17,13 +17,13 @@ class Vending
             drink = build_drink(drink_list)
             @drinks.push(drink)
         end
-        @drinks
     end
 
     # 飲み物一覧の出力
     def display_drinks
         puts_message_display_drinks
         @drinks.each do |drink|
+            puts " #{drink.num}：#{drink.name}（#{drink.price}円）"
         end
         puts_message_line
     end
@@ -33,28 +33,23 @@ class Vending
         puts_message_request_deposit
         money = gets.chomp
 
-        unless number?(money)
-            # puts_message_not_number
+        if number?(money)
+            puts_message_success_deposit(money)
+            build_deposited_money(money)
+        else
             deposits
         end
-
-        puts_message_success_deposit(money)
-        build_deposited_money(money)
     end
 
     # 購入商品の選択依頼
-    def orders(drink_list)
+    def orders
         puts_message_line
-        miss_order = true
-        while miss_order do
+        while true do
             puts_message_request_order
             selected_drink_num = gets.chomp
             next unless number?(selected_drink_num)
 
-            selected_drink_num = selected_drink_num.to_i
-            next unless chk_stock?(selected_drink_num, drink_list)
-
-            miss_order = false
+            break if chk_stock?(selected_drink_num)
         end
     end
 
@@ -83,7 +78,6 @@ class Vending
     # 数値チェック
     def number?(num)
         # 先頭(\A)から末尾(\z)までが0~9であるか判定
-        # @isNumber != (num =~ /\A[0-9]+\z/)
         if (num =~ /\A[0-9]+\z/)
             true
         else
@@ -93,18 +87,19 @@ class Vending
     end
 
     # 在庫チェック
-    def chk_stock?(selected_drink_num, drink_list)
-        return_flg = false
-        drink_list.each do |drink|
-            if drink.num == selected_drink_num
-                puts_message_detail_order(drink)
-                @selected_drink = drink
-                return_flg = true
-                break
-            end
+    def chk_stock?(selected_drink_num)
+        selected_drink_num = selected_drink_num.to_i
+        @drinks.each do |drink|
+            @selected_drink = drink if drink.num == selected_drink_num
         end
-        puts_message_not_exist_drinks unless return_flg
-        return_flg
+
+        if @selected_drink
+            puts_message_detail_order(@selected_drink)
+        else
+            puts_message_not_exist_drinks
+        end
+
+        @selected_drink
     end
 
     def build_deposited_money(money)
