@@ -1,12 +1,13 @@
 class Drink
-	attr_reader :num
-	attr_reader :name
-	attr_reader :price
+	attr_reader :id, :name, :price
 
-	def initialize(num, name, price)
-		@num   = num
-		@name  = name
-		@price = price
+	@@id = 0
+
+	def initialize(**params)
+		@@id += 1
+		@id = @@id
+		@name  = params[:name]
+		@price = params[:price]
 	end
 
 end
